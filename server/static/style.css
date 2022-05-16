@@ -1,0 +1,102 @@
+body{
+    background-color: #23282D;
+    color: white;
+    margin: 0px;
+}
+
+a {
+    color: white;
+}
+
+h4{
+    margin: 0;
+}
+
+
+.mt-10{
+    margin-top: 10px;
+}
+
+.mt-20{
+    margin-top: 20px;
+}
+
+.mt-30{
+    margin-top: 30px;
+}
+
+.mt-40{
+    margin-top: 40px;
+}
+
+.mt-50{
+    margin-top: 50px;
+}
+
+.mt-60{
+    margin-top: 60px;
+}
+
+.ml-10{
+    margin-left: 10px;
+}
+
+.ml-20{
+    margin-left: 20px;
+}
+
+.ml-30{
+    margin-left: 30px;
+}
+
+.pl-10{
+    padding-left: 10px;
+}
+
+.pl-20{
+    padding-left: 20px;
+}
+
+.pl-30{
+    padding-left: 30px;
+}
+.mr-10{
+    margin-right: 10px;
+}
+
+.mr-20{
+    margin-right: 20px;
+}
+
+.mr-30{
+    margin-right: 30px;
+}
+
+.w-80p{
+    width: 80%;
+}
+
+.w-90p{
+    width: 90%;
+}
+
+.fixed-table-loading {
+    visibility: hidden;
+    top: 0px;
+    display: none;
+}
+
+.loading-wrap {
+    visibility: hidden;
+    display: none;
+}
+
+.table-loading {
+    visibility: hidden;
+    display: none;
+}
+
+.loading {
+    visibility: hidden;
+    display: none;
+}

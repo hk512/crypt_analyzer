@@ -51,7 +51,7 @@ def get_price():
     data['Close'] = round(data['Close'].astype(float), 1)
 
     return jsonify({
-        'labels': [datetime.fromtimestamp(value/1000).strftime(TIME_FORMAT) for value in data['Open time'].values],
+        'labels': [datetime.fromtimestamp(value / 1000).strftime(TIME_FORMAT) for value in data['Open time'].values],
         'datasets': [{
             'label': f'{BINANCE}_{symbol}',
             'data': data['Close'].to_list(),
@@ -109,9 +109,9 @@ def get_funding_rate_history():
 if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument('-p', '--port', default=5000, type=int, help='port to listen on')
+    parser.add_argument('-i', '--ip', default='0.0.0.0', type=str, help='host to listen on')
     args = parser.parse_args()
     port = args.port
+    ip = args.ip
 
-    app.config['port'] = port
-
-    app.run(host='0.0.0.0', port=port, threaded=True, debug=True)
+    app.run(host=ip, port=port, threaded=True, debug=True)

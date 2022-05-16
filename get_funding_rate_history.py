@@ -148,7 +148,6 @@ def get_huobi_btc_usd_funding_rate_history():
     client = ClientHuobi()
 
     response = client.get_swap_historical_funding_rate(symbol=symbol, page_index=1)
-    print(response)
     data = pd.DataFrame(response['data']['data'])
     data['time'] = (data['funding_time'].astype(int) / 1000).apply(datetime.fromtimestamp)
     data.set_index('time', inplace=True)

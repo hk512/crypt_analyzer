@@ -3,6 +3,7 @@ import requests
 BASE_URL = 'https://api.gateio.ws/api/v4'
 
 
+#
 class ClientGate(object):
     def get_futures_tickers(self, settle, contract):
         url = f'{BASE_URL}/futures/{settle}/tickers'

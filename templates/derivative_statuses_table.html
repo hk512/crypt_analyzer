@@ -4,9 +4,9 @@
         <th>Pair</th>
         <th>Last</th>
         <th>Index</th>
-        <th>Mark</th>
-        <th>Index kairi</th>
-        <th>Mark kairi</th>
+<!--        <th>Mark</th>-->
+        <th>Index Basis</th>
+<!--        <th>Mark kairi</th>-->
         <th>FR</th>
         <th>Next FR</th>
         <th>L/S Ratio</th>
@@ -28,11 +28,11 @@
                 <td style="text-align:right;">{{row['index_price']}}</td>
             {% endif %}
 
-            {% if row['mark_price'] is none %}
-                <td style="text-align:center;">-</td>
-            {% else %}
-                <td style="text-align:right;">{{row['mark_price']}}</td>
-            {% endif %}
+<!--            {% if row['mark_price'] is none %}-->
+<!--                <td style="text-align:center;">-</td>-->
+<!--            {% else %}-->
+<!--                <td style="text-align:right;">{{row['mark_price']}}</td>-->
+<!--            {% endif %}-->
 
             {% if row['index_price_kairi_pct'] is none %}
                 <td style="text-align:center;">-</td>
@@ -44,15 +44,15 @@
                 <td style="background:rgba(255,0,0,0.1); text-align:right;">{{row['index_price_kairi_pct']}}%</td>
             {% endif %}
 
-            {% if row['mark_price_kairi_pct'] is none %}
-                <td style="text-align:center;">-</td>
-            {% elif row['mark_price_kairi_pct'] == 0 %}
-                <td style="text-align:right;">{{row['mark_price_kairi_pct']}}%</td>
-            {% elif row['mark_price_kairi_pct'] > 0 %}
-                <td style="background:rgba(0,255,0,0.1); text-align:right;">{{row['mark_price_kairi_pct']}}%</td>
-            {% elif row['mark_price_kairi_pct'] < 0 %}
-                <td style="background:rgba(255,0,0,0.1); text-align:right;">{{row['mark_price_kairi_pct']}}%</td>
-            {% endif %}
+<!--            {% if row['mark_price_kairi_pct'] is none %}-->
+<!--                <td style="text-align:center;">-</td>-->
+<!--            {% elif row['mark_price_kairi_pct'] == 0 %}-->
+<!--                <td style="text-align:right;">{{row['mark_price_kairi_pct']}}%</td>-->
+<!--            {% elif row['mark_price_kairi_pct'] > 0 %}-->
+<!--                <td style="background:rgba(0,255,0,0.1); text-align:right;">{{row['mark_price_kairi_pct']}}%</td>-->
+<!--            {% elif row['mark_price_kairi_pct'] < 0 %}-->
+<!--                <td style="background:rgba(255,0,0,0.1); text-align:right;">{{row['mark_price_kairi_pct']}}%</td>-->
+<!--            {% endif %}-->
 
             {% if row['funding_rate_pct'] is none %}
                 <td style="text-align:center;">-</td>

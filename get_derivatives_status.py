@@ -130,7 +130,7 @@ def get_binance_btc_usd_prep_derivative_status():
     mark_price = float(response_data[0]['markPrice'])
     funding_rate = float(response_data[0]['lastFundingRate'])
     next_funding_time = datetime.fromtimestamp(int(response_data[0]['nextFundingTime']) / 1000)
-    next_funding_rate = float(response_data[0]['interestRate'])
+    # next_funding_rate = float(response_data[0]['interestRate'])
 
     response_data = client.get_d_api_ticker_price(symbol=symbol)
     last_price = float(response_data[0]['price'])
@@ -147,7 +147,7 @@ def get_binance_btc_usd_prep_derivative_status():
         funding_time_dt=None,
         funding_rate=funding_rate,
         next_funding_time_dt=next_funding_time,
-        next_funding_rate=next_funding_rate,
+        next_funding_rate=None,
         long_short_ratio=long_short_ratio
     )
 
@@ -161,7 +161,7 @@ def get_binance_btc_usdt_derivative_status():
     mark_price = float(response_data['markPrice'])
     funding_rate = float(response_data['lastFundingRate'])
     next_funding_time = datetime.fromtimestamp(int(response_data['nextFundingTime']) / 1000)
-    next_funding_rate = float(response_data['interestRate'])
+    # next_funding_rate = float(response_data['interestRate'])
 
     response_data = client.get_f_api_ticker_price(symbol=symbol)
     last_price = float(response_data['price'])
@@ -178,7 +178,7 @@ def get_binance_btc_usdt_derivative_status():
         funding_time_dt=None,
         funding_rate=funding_rate,
         next_funding_time_dt=next_funding_time,
-        next_funding_rate=next_funding_rate,
+        next_funding_rate=None,
         long_short_ratio=long_short_ratio
     )
 
@@ -192,7 +192,7 @@ def get_binance_btc_busd_derivative_status():
     mark_price = float(response_data['markPrice'])
     funding_rate = float(response_data['lastFundingRate'])
     next_funding_time = datetime.fromtimestamp(int(response_data['nextFundingTime']) / 1000)
-    next_funding_rate = float(response_data['interestRate'])
+    # next_funding_rate = float(response_data['interestRate'])
 
     response_data = client.get_f_api_ticker_price(symbol=symbol)
     last_price = float(response_data['price'])
@@ -209,7 +209,7 @@ def get_binance_btc_busd_derivative_status():
         funding_time_dt=None,
         funding_rate=funding_rate,
         next_funding_time_dt=next_funding_time,
-        next_funding_rate=next_funding_rate,
+        next_funding_rate=None,
         long_short_ratio=long_short_ratio
     )
 
@@ -221,6 +221,7 @@ def get_bitmex_xbt_usd_derivative_status():
 
     last_price = response_data[0]['lastPrice']
     mark_price = response_data[0]['markPrice']
+    index_price = response_data[0]['indicativeSettlePrice']
 
     funding_time = datetime.strptime(response_data[0]['fundingTimestamp'], '%Y-%m-%dT%H:%M:%S.000Z') + timedelta(
         hours=9)
@@ -232,7 +233,7 @@ def get_bitmex_xbt_usd_derivative_status():
         symbol=symbol,
         last_price=round(last_price, 1),
         mark_price=round(mark_price, 1),
-        index_price=None,
+        index_price=round(index_price, 1),
         funding_time_dt=funding_time,
         funding_rate=funding_rate,
         next_funding_time_dt=None,
@@ -248,6 +249,7 @@ def get_bitmex_xbt_usdt_derivative_status():
 
     last_price = response_data[0]['lastPrice']
     mark_price = response_data[0]['markPrice']
+    index_price = response_data[0]['indicativeSettlePrice']
 
     funding_time = datetime.strptime(response_data[0]['fundingTimestamp'], '%Y-%m-%dT%H:%M:%S.000Z') + timedelta(
         hours=9)
@@ -259,7 +261,7 @@ def get_bitmex_xbt_usdt_derivative_status():
         symbol=symbol,
         last_price=round(last_price, 1),
         mark_price=round(mark_price, 1),
-        index_price=None,
+        index_price=round(index_price, 1),
         funding_time_dt=funding_time,
         funding_rate=funding_rate,
         next_funding_time_dt=None,
@@ -446,12 +448,16 @@ def get_huobi_btc_usd_derivative_status():
     next_funding_time = datetime.fromtimestamp(int(response_data['data']['next_funding_time']) / 1000)
     next_funding_rate = float(response_data['data']['estimated_rate'])
 
+    response_data = client.get_swap_basis(symbol=symbol, period='1min', size=1, basis_price_type='close')
+    last_price = float(response_data['data'][0]['contract_price'])
+    index_price = float(response_data['data'][0]['index_price'])
+
     return DerivativeStatus(
         exchange=HUOBI,
         symbol=symbol,
-        last_price=None,
+        last_price=round(last_price, 1),
         mark_price=None,
-        index_price=None,
+        index_price=round(index_price, 1),
         funding_time_dt=funding_time,
         funding_rate=funding_rate,
         next_funding_time_dt=next_funding_time,
@@ -471,12 +477,16 @@ def get_huobi_btc_usdt_derivative_status():
     next_funding_time = datetime.fromtimestamp(int(response_data['data']['next_funding_time']) / 1000)
     next_funding_rate = float(response_data['data']['estimated_rate'])
 
+    response_data = client.get_linear_swap_basis(symbol=symbol, period='1min', size=1, basis_price_type='close')
+    last_price = float(response_data['data'][0]['contract_price'])
+    index_price = float(response_data['data'][0]['index_price'])
+
     return DerivativeStatus(
         exchange=HUOBI,
         symbol=symbol,
-        last_price=None,
+        last_price=round(last_price, 1),
         mark_price=None,
-        index_price=None,
+        index_price=round(index_price, 1),
         funding_time_dt=funding_time,
         funding_rate=funding_rate,
         next_funding_time_dt=next_funding_time,
@@ -646,19 +656,22 @@ def get_bitget_btc_usd_derivative_status():
     client = ClientBitget()
 
     response_data = client.get_current_fundrate(symbol=symbol)
-
-    # last_price = float(response_data[0]['last'])
-    # mark_price = float(response_data[0]['mark_price'])
-    # index_price = float(response_data[0]['index_price'])
     funding_rate = float(response_data['data']['fundingRate'])
+
+    response_data = client.get_ticker(symbol=symbol)
+    last_price = float(response_data['data']['last'])
+
+    response_data = client.get_index_price(symbol=symbol)
+    index_price = float(response_data['data']['index'])
+
     # next_funding_rate = float(response_data[0]['funding_rate_indicative'])
 
     return DerivativeStatus(
         exchange=BITGET,
         symbol=symbol,
-        last_price=None,
+        last_price=round(last_price, 1),
         mark_price=None,
-        index_price=None,
+        index_price=round(index_price, 1),
         funding_time_dt=None,
         funding_rate=funding_rate,
         next_funding_time_dt=None,
@@ -672,19 +685,20 @@ def get_bitget_btc_usdt_derivative_status():
     client = ClientBitget()
 
     response_data = client.get_current_fundrate(symbol=symbol)
-
-    # last_price = float(response_data[0]['last'])
-    # mark_price = float(response_data[0]['mark_price'])
-    # index_price = float(response_data[0]['index_price'])
     funding_rate = float(response_data['data']['fundingRate'])
-    # next_funding_rate = float(response_data[0]['funding_rate_indicative'])
+
+    response_data = client.get_ticker(symbol=symbol)
+    last_price = float(response_data['data']['last'])
+
+    response_data = client.get_index_price(symbol=symbol)
+    index_price = float(response_data['data']['index'])
 
     return DerivativeStatus(
         exchange=BITGET,
         symbol=symbol,
-        last_price=None,
+        last_price=round(last_price, 1),
         mark_price=None,
-        index_price=None,
+        index_price=round(index_price, 1),
         funding_time_dt=None,
         funding_rate=funding_rate,
         next_funding_time_dt=None,

@@ -11,7 +11,7 @@ from api_client.client_binance import ClientBinance
 from get_derivatives_status import get_btc_derivative_statuses
 from get_long_short_ratio import get_btc_long_short_ratio
 from get_kairi import get_btc_index_price_kairi
-from get_kairi import get_btc_mark_price_kairi
+# from get_kairi import get_btc_mark_price_kairi
 from get_funding_rate_history import get_btc_funding_rate_history
 from const import *
 
@@ -73,9 +73,9 @@ def get_index_price_kairi():
     return jsonify(get_btc_index_price_kairi()), 200
 
 
-@app.route('/mark_price_kairi', methods=['GET'])
-def get_mark_price_kairi():
-    return jsonify(get_btc_mark_price_kairi()), 200
+# @app.route('/mark_price_kairi', methods=['GET'])
+# def get_mark_price_kairi():
+#     return jsonify(get_btc_mark_price_kairi()), 200
 
 
 @app.route('/funding_rate_history', methods=['GET'])

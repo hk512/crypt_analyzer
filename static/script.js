@@ -2,7 +2,7 @@ const CHART_OPTIONS = {
     maintainAspectRatio: false,
     plugins: {
         legend: {
-            position:'left',
+            position:'top',
             labels:{
                 font: {
                     size: 10
@@ -36,6 +36,14 @@ const CHART_OPTIONS = {
             }
         },
     },
+    layout: {                             //レイアウト
+        padding: {                          //余白設定
+            left: 0,
+            right: 0,
+            top: 5,
+            bottom: 5
+        }
+    }
 }
 
 window.onload = function(){
@@ -52,14 +60,15 @@ function updateAll(){
     updateDerivativeStatusesTable();
     updateLongShortRatioChart();
     updateIndexPriceKairiChart();
-    updateMarkPriceKairiChart();
+//    updateMarkPriceKairiChart();
     updateFundingRateChart();
-    updateUpdateTime();
     updatePriceChart();
+    updateUpdateTime();
 }
 
 function updateUpdateTime(){
-    $('#UpdateTime').html("Last updated: " + getNowDateStr());
+    let nowDate = new Date();
+    $('#UpdateTime').html("Last updated: " + nowDate.toLocaleString());
 }
 
 function updateDerivativeStatusesTable(){
@@ -165,57 +174,57 @@ function updateIndexPriceKairiChart(){
     })
 };
 
-function updateMarkPriceKairiChart(){
-    $.ajax({
-        type: 'GET',
-        url: '/mark_price_kairi',
-    }).done(function (data) {
-
-        if (typeof MPKChart !== 'undefined') {
-            MPKChart.destroy();
-        }
-
-        let ctx = document.getElementById('MarkPriceKairiChart').getContext('2d');
-
-        window.MPKChart = new Chart(ctx, {
-            type: 'bar',
-            data:{
-                labels:data[0]['indexes'],
-                datasets: [
-                {
-                    label:'Binance BTC/USD',
-                    data:data[0]['values'],
-                    borderColor: '#ff3737',
-                    borderWidth: 1,
-                    pointRadius: 0,
-                },
-                {
-                    label:'Binance BTC/USDT',
-                    data:data[1]['values'],
-                    borderColor: '#ff8337',
-                    borderWidth: 1,
-                    pointRadius: 0,
-                },
-                {
-                    label:'Bybit BTC/USD',
-                    data:data[2]['values'],
-                    borderColor: '#de6fff',
-                    borderWidth: 1,
-                    pointRadius: 0,
-                },
-                {
-                    label:'Bybit BTC/USDT',
-                    data:data[3]['values'],
-                    borderColor: '#ff74bc',
-                    borderWidth: 1,
-                    pointRadius: 0,
-                }]
-            },
-            options: CHART_OPTIONS
-        });
-
-    })
-};
+//function updateMarkPriceKairiChart(){
+//    $.ajax({
+//        type: 'GET',
+//        url: '/mark_price_kairi',
+//    }).done(function (data) {
+//
+//        if (typeof MPKChart !== 'undefined') {
+//            MPKChart.destroy();
+//        }
+//
+//        let ctx = document.getElementById('MarkPriceKairiChart').getContext('2d');
+//
+//        window.MPKChart = new Chart(ctx, {
+//            type: 'bar',
+//            data:{
+//                labels:data[0]['indexes'],
+//                datasets: [
+//                {
+//                    label:'Binance BTC/USD',
+//                    data:data[0]['values'],
+//                    borderColor: '#ff3737',
+//                    borderWidth: 1,
+//                    pointRadius: 0,
+//                },
+//                {
+//                    label:'Binance BTC/USDT',
+//                    data:data[1]['values'],
+//                    borderColor: '#ff8337',
+//                    borderWidth: 1,
+//                    pointRadius: 0,
+//                },
+//                {
+//                    label:'Bybit BTC/USD',
+//                    data:data[2]['values'],
+//                    borderColor: '#de6fff',
+//                    borderWidth: 1,
+//                    pointRadius: 0,
+//                },
+//                {
+//                    label:'Bybit BTC/USDT',
+//                    data:data[3]['values'],
+//                    borderColor: '#ff74bc',
+//                    borderWidth: 1,
+//                    pointRadius: 0,
+//                }]
+//            },
+//            options: CHART_OPTIONS
+//        });
+//
+//    })
+//};
 
 function updateLongShortRatioChart() {
     $.ajax({
@@ -297,15 +306,4 @@ function updateLongShortRatioChart() {
         $('#LongShortRatioChartUpdateTime').html("<最終更新日時> " + getNowDateStr());
 
     })
-};
-
-function getNowDateStr(){
-    let nowDate = new Date();
-    let year = nowDate.getFullYear();
-    let month = nowDate.getMonth();
-    let day = nowDate.getDate();
-    let hour = nowDate.getHours();
-    let min = nowDate.getMinutes();
-    let second = nowDate.getSeconds();
-    return year + "/" + month + "/" + day + " " + hour + ":" + min + ":" + second
 };
